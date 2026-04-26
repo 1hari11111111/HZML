@@ -1,0 +1,53 @@
+name: Deploy to Heroku
+
+on:
+  workflow_dispatch:
+    inputs:
+      heroku_app_name:
+        description: 'Heroku App name'
+        required: true
+        type: string
+      heroku_api_key:
+        description: 'Heroku API key'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Login to Heroku Container Registry
+        env:
+          HEROKU_API_KEY: ${{ github.event.inputs.heroku_api_key }}
+        run: heroku container:login
+
+      - name: Set Heroku Stack to Container
+        env:
+          HEROKU_API_KEY: ${{ github.event.inputs.heroku_api_key }}
+        run: heroku stack:set container --app ${{ github.event.inputs.heroku_app_name }}
+
+      - name: Build and Push Docker Image to Heroku
+        env:
+          HEROKU_API_KEY: ${{ github.event.inputs.heroku_api_key }}
+        run: |
+          heroku container:push web \
+            --app ${{ github.event.inputs.heroku_app_name }}
+
+      - name: Release Docker Image on Heroku
+        env:
+          HEROKU_API_KEY: ${{ github.event.inputs.heroku_api_key }}
+        run: |
+          heroku container:release web \
+            --app ${{ github.event.inputs.heroku_app_name }}
+
+      - name: Deployment Complete
+        run: |
+          echo "✅ Successfully deployed to Heroku!"
+          echo "App URL: https://${{ github.event.inputs.heroku_app_name }}.herokuapp.com"
