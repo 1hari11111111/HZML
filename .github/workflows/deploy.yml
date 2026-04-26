@@ -11,6 +11,14 @@ on:
         description: 'Heroku API key'
         required: true
         type: string
+      heroku_email:
+        description: 'Heroku email address'
+        required: true
+        type: string
+      heroku_team_name:
+        description: 'Heroku Team Name'
+        required: false
+        type: string
 
 jobs:
   deploy:
@@ -26,7 +34,11 @@ jobs:
       - name: Login to Heroku Container Registry
         env:
           HEROKU_API_KEY: ${{ github.event.inputs.heroku_api_key }}
-        run: heroku container:login
+        run: |
+          echo "${{ github.event.inputs.heroku_api_key }}" | docker login \
+            --username="${{ github.event.inputs.heroku_email }}" \
+            --password-stdin registry.heroku.com
+          heroku container:login
 
       - name: Set Heroku Stack to Container
         env:
