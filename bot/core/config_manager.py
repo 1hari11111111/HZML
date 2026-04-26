@@ -1,6 +1,9 @@
 from importlib import import_module
 from os import getenv
 
+# Keys that must always be strings regardless of what MongoDB/env returns
+_FORCE_STR_KEYS = {"BOT_TOKEN", "TELEGRAM_HASH", "USER_SESSION_STRING"}
+
 
 class Config:
     AS_DOCUMENT = False
@@ -197,6 +200,10 @@ class Config:
 
     @classmethod
     def _convert_env_type(cls, key, value):
+        # FIX: keys that must always remain strings, regardless of stored type
+        if key in _FORCE_STR_KEYS:
+            return str(value) if value is not None else ""
+
         original_value = getattr(cls, key, None)
         if original_value is None:
             return value
@@ -218,6 +225,10 @@ class Config:
                 return float(value)
             except (ValueError, TypeError):
                 return original_value
+        # FIX: if the class default is a str but MongoDB returned an int/other type, force str
+        elif isinstance(original_value, str):
+            if not isinstance(value, str):
+                return str(value)
         return value
 
     @classmethod
