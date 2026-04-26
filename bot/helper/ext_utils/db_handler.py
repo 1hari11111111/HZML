@@ -99,6 +99,10 @@ class DbManager:
     async def update_nzb_config(self):
         if self._return:
             return
+        # FIX: guard against missing file on ephemeral filesystems (e.g. Heroku)
+        if not await aiopath.exists("sabnzbd/SABnzbd.ini"):
+            LOGGER.warning("sabnzbd/SABnzbd.ini not found, skipping NZB config update.")
+            return
         async with aiopen("sabnzbd/SABnzbd.ini", "rb+") as pf:
             nzb_conf = await pf.read()
         await self.db.settings.nzb.replace_one(
