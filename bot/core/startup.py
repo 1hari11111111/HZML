@@ -155,6 +155,9 @@ async def load_settings():
                 await remove("sabnzbd/SABnzbd.ini.bak")
             ((key, value),) = nzb_opt.items()
             file_ = key.replace("__", ".")
+            # FIX: ensure sabnzbd/ directory exists before writing
+            if not await aiopath.exists("sabnzbd"):
+                await makedirs("sabnzbd")
             async with aiopen(f"sabnzbd/{file_}", "wb+") as f:
                 await f.write(value)
             LOGGER.info("Loaded.. Sabnzbd Data from MongoDB")
@@ -216,11 +219,15 @@ async def save_settings():
     if await database.db.settings.qbittorrent.find_one({"_id": TgClient.ID}) is None:
         await database.save_qbit_settings()
     if await database.db.settings.nzb.find_one({"_id": TgClient.ID}) is None:
-        async with aiopen("sabnzbd/SABnzbd.ini", "rb+") as pf:
-            nzb_conf = await pf.read()
-        await database.db.settings.nzb.update_one(
-            {"_id": TgClient.ID}, {"$set": {"SABnzbd__ini": nzb_conf}}, upsert=True
-        )
+        # FIX: only read SABnzbd.ini if it actually exists (ephemeral filesystem safe)
+        if await aiopath.exists("sabnzbd/SABnzbd.ini"):
+            async with aiopen("sabnzbd/SABnzbd.ini", "rb+") as pf:
+                nzb_conf = await pf.read()
+            await database.db.settings.nzb.update_one(
+                {"_id": TgClient.ID}, {"$set": {"SABnzbd__ini": nzb_conf}}, upsert=True
+            )
+        else:
+            LOGGER.warning("sabnzbd/SABnzbd.ini not found, skipping NZB settings save.")
 
 
 async def update_variables():
