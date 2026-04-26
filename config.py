@@ -1,9 +1,9 @@
 # REQUIRED CONFIG
 BOT_TOKEN = "8645344135:AAGrsbEdvWKEZVXeDD5h4t-X0pIWv1-Tzgs"
 OWNER_ID = 832724310
-TELEGRAM_API = 3857092 
-TELEGRAM_HASH = "0d7285e5fc1fce2c152e41ec069bf6b"
-DATABASE_URL = "mongodb+srv://nenuevaru:hari813142@cluster0.bvew69.mongodb.net/?appName=Cluster0"
+TELEGRAM_API = 32178848
+TELEGRAM_HASH = "574a67047a4279fc3fe3e2af2dac573a"
+DATABASE_URL = "mongodb+srv://ranigupta24753y_db_user:hari813142@cluster0.n5hqign.mongodb.net/?appName=Cluster0"
 
 # OPTIONAL CONFIG
 DEFAULT_LANG = "en"
@@ -11,7 +11,7 @@ TG_PROXY = (
     {}
 )  # {"scheme": ”socks5”, "hostname": ””, "port": 1234, "username": ”user”, "password": ”pass”}
 USER_SESSION_STRING = ""
-CMD_SUFFIX = ""
+CMD_SUFFIX = "1"
 AUTHORIZED_CHATS = ""
 SUDO_USERS = "8327243105"
 STATUS_LIMIT = 10
