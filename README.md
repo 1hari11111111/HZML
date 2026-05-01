@@ -171,20 +171,6 @@ sudo docker image prune -a
 
 ---
 
-**Check the Docs Here :** [Click Here](https://github.com/SilentDemonSD/WZ-Deploy/tree/main?tab=readme-ov-file#2%EF%B8%8F⃣-method-2-github-workflow-guide)
 
----
 
-</details>
-
-## 🏅 **Bot Authors**
-<details>
-    <summary><b>Click Here For Description</b></summary>
-
-|<img width="80" src="https://avatars.githubusercontent.com/u/105407900?v=4">|<img width="80" src="https://avatars.githubusercontent.com/u/93116400?v=4">|<img width="80" src="https://avatars.githubusercontent.com/u/113664541?v=4">|<img width="80" src="https://avatars.githubusercontent.com/u/84721324?v=4">|
-|:---:|:---:|:---:|:---:|
-|[`SilentDemonSD`](https://github.com/SilentDemonSD)|[`RjRiajul`](https://github.com/rjriajul)|[`CodeWithWeeb`](https://github.com/weebzone)|[`Maverick`](https://github.com/MajnuRangeela)|
-|Author and DDL, UI Design, More Customs..|Co-Author & Maintainer|Author and Wraps Up Features|Co-Author & Bug Tester|
-
-</details>
 
