@@ -140,9 +140,6 @@ sudo docker image prune -a
 ------
 
 
-  <summary><strong>View All Steps <kbd>Click Here</kbd></strong></summary>
-
----
 
 
 
