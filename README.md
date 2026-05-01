@@ -139,9 +139,7 @@ sudo docker image prune -a
     
 ------
 
-# Deployment Guide (Heroku)
 
-<details>
   <summary><strong>View All Steps <kbd>Click Here</kbd></strong></summary>
 
 ---
